@@ -60,6 +60,12 @@ const server = http.createServer((req,res)=>{
         res.writeHead(200,{'content-type':'image/svg'})
         readStream.pipe(res);
     }
+    else if(req.url.match('\.png$')){
+        const pngImgPath = path.join(__dirname,'publick',req.url);
+        const pngStream = fs.createReadStream(pngImgPath);
+        res.writeHead(200,{'content-type':'image/png'})
+        pngStream.pipe(res)
+    }
     else{
         readFile(404,'./publick/error.html');
     }
